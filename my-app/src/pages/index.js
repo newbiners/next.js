@@ -1,11 +1,24 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import Image from 'next/image';
 import styles from '@/styles/Home.module.css'
+import { useState } from 'react';
+import Api from "./api/index";
 
-const inter = Inter({ subsets: ['latin'] })
+
 
 export default function Home() {
+const [pos, setPos] = useState()
+console.log(pos);
+  const submitContact = async (event) => {
+    event.preventDefault();
+    const url =  Api();
+    const data = await fetch(url + `&s=${event.target.name.value}`);
+    const json = await data.json();
+    setPos(json.Search)
+    // console.log(json.Search);
+  };
+
+
   return (
     <>
       <Head>
@@ -15,108 +28,53 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+        <div className={styles['container-image']}>
+          <div className={styles['header-home']}>
+            <h1>logo</h1>
+            <div>
+            <form onSubmit={submitContact}>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  required
+                />
+                <button type="submit">
+                  Submit
+                </button>
+            </form>
+            </div>
+            <h1>profil</h1>
+          </div>
+          <div className={styles.title}>
+            <h1 style={{fontSize: 70, paddingBottom: 20}}>It</h1>
+            <p style={{fontSize: 25}}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
           </div>
         </div>
+        <section style={{backgroundColor: 'grey', padding: '20px 30px',zIndex: 999, marginBottom: 80}}>
+          <ul style={{display:'flex',justifyContent: 'space-around',listStyle: 'none'}}>
+            <li>ALL MOVIE</li>
+            <li>ACTION</li>
+            <li>ROMANCE</li>
+            <li>FAMILY</li>
+          </ul>
+        </section>
+        <section className={styles.hero}>
+          {pos && pos.map((e, i) =>{
+            return(
+              <div className={styles.card} style={{borderRadius: 20,backgroundImage: `url(${e.Poster})`,backgroundSize: "cover",width: 300,height: 400,justifyItems: 'center',margin: '0 auto', color: 'white', display: 'flex', alignItems: 'end', overflow: "hidden", cursor:'pointer'}}>
+                <div style={{backgroundColor: 'grey', width: '100%', padding: '20px 50px'}}>
+                  <h1>{e.Title}</h1>
+                  <p>{e.Year}</p>
+                  {/* <img src={e.Poster}/> */}
+                </div>
+              </div>
+            )
+          })
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+          }
+        </section>
       </main>
     </>
   )
