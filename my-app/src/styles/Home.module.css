@@ -41,3 +41,26 @@
 .card:hover {
   box-shadow: 2px 4px 5px 1px rgba(0, 0, 0, 0.849);
 }
+
+.form {
+  background-color: rgb(235, 235, 235);
+  /* padding: 10px 30px; */
+  height: 50px;
+  width: 20rem;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  gap: 20px;
+}
+.input {
+  background-color: transparent;
+  border-width: 0ch;
+  padding: 10px 20px;
+  height: 100%;
+  width: 100%;
+  font-size: 20px;
+  color: brown;
+}
+.input:focus {
+  outline: none;
+}

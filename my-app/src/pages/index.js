@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styles from '@/styles/Home.module.css'
 import { useState } from 'react';
 import Api from "./api/index";
+import Search from '@/images/search';
 
 
 
@@ -32,16 +33,17 @@ console.log(pos);
           <div className={styles['header-home']}>
             <h1>logo</h1>
             <div>
-            <form onSubmit={submitContact}>
+            <form onSubmit={submitContact} className={styles.form}>
                 <input
+                  className={styles.input}
                   id="name"
                   name="name"
                   type="text"
                   autocomplete="name"
                   required
                 />
-                <button type="submit">
-                  Submit
+                <button type="submit" style={{borderWidth: 0, width: 50,height: 50,padding: 3,borderColor: 'transparent'}}>
+                  <Search/>
                 </button>
             </form>
             </div>
